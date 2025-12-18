@@ -15,7 +15,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { VersionedTransaction, Keypair } from "@solana/web3.js";
 import { Buffer } from "buffer";
-import { Send, Bot, User, Sparkles, Trash2 } from "lucide-react";
+import { Send, Bot, User, Sparkles, Trash2, Play } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import Markdown from "react-markdown";
 
 // Polyfill Buffer for browser
@@ -190,7 +197,35 @@ export function ChatInterface() {
             </p>
           </div>
         </div>
-        <WalletButton />
+        <div className="flex items-center gap-3">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 border-white/10 hover:bg-white/5"
+              >
+                <Play size={14} />
+                <span className="hidden sm:inline">Watch Demo</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[800px] p-0 bg-black border-white/10">
+              <DialogHeader className="p-4 pb-0">
+                <DialogTitle>Metaplex Genesis MCP Demo</DialogTitle>
+              </DialogHeader>
+              <div className="aspect-video w-full">
+                <iframe
+                  src="https://www.youtube.com/embed/ojRoDDvvNck"
+                  title="Metaplex Genesis MCP Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full rounded-b-lg"
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
+          <WalletButton />
+        </div>
       </div>
 
       <Card className="flex-1 flex flex-col overflow-hidden max-w-5xl mx-auto w-full border-white/10 shadow-2xl bg-card/50 backdrop-blur-xl">
