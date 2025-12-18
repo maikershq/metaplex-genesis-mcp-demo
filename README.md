@@ -11,6 +11,12 @@ Demo web app showcasing the [metaplex-genesis-mcp](https://github.com/maikershq/
 [![Solana](https://img.shields.io/badge/Solana-Devnet-9945FF)](https://solana.com/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue)](LICENSE)
 
+## Demo
+
+[![Watch the demo](https://img.shields.io/badge/YouTube-Demo-red?logo=youtube)](https://youtu.be/ojRoDDvvNck)
+
+https://youtu.be/ojRoDDvvNck
+
 ## Overview
 
 A Next.js chat interface that connects to the Metaplex Genesis MCP server, enabling natural language token creation on Solana. Users can create tokens by simply describing what they want.
