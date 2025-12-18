@@ -24,8 +24,9 @@ A Next.js chat interface that connects to the Metaplex Genesis MCP server, enabl
 **Features:**
 
 - 💬 **Chat Interface** - Natural language interaction with GPT-4o
-- 👛 **Wallet Integration** - Solana wallet adapter for transaction signing
+- 👛 **Wallet Integration** - Solana wallet adapter (Phantom, Solflare, etc.) for transaction signing
 - 🪙 **Token Creation** - Create Genesis tokens with minimal input
+- 🔄 **Swapping** - Swap tokens directly from the chat interface
 - 🔗 **MCP Integration** - Direct connection to metaplex-genesis-mcp server
 
 ## Quick Start
