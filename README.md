@@ -13,9 +13,7 @@ Demo web app showcasing the [metaplex-genesis-mcp](https://github.com/maikershq/
 
 ## Demo
 
-[![Watch the demo](https://img.shields.io/badge/YouTube-Demo-red?logo=youtube)](https://youtu.be/ojRoDDvvNck)
-
-https://youtu.be/ojRoDDvvNck
+[![Watch the demo](https://img.youtube.com/vi/ojRoDDvvNck/maxresdefault.jpg)](https://youtu.be/ojRoDDvvNck)
 
 ## Overview
 
