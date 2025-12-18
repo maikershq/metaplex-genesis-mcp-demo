@@ -6,7 +6,11 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { UnsafeBurnerWalletAdapter } from "@solana/wallet-adapter-wallets";
+import {
+  UnsafeBurnerWalletAdapter,
+  PhantomWalletAdapter,
+  SolflareWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
 import {
   WalletModalProvider,
   WalletDisconnectButton,
@@ -32,6 +36,8 @@ export const WalletContextProvider: FC<{ children: ReactNode }> = ({
        * Wallets that support the standard wallet adapter interface will be automatically detected.
        * Your app can now use most Solana wallets without any configuration.
        */
+      new PhantomWalletAdapter(),
+      new SolflareWalletAdapter(),
       new UnsafeBurnerWalletAdapter(),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

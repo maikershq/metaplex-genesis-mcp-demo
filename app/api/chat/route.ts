@@ -70,15 +70,23 @@ Instead, follow this simplified flow:
 4. **IMPORTANT: When user provides name and symbol, IMMEDIATELY call the tool.**
    Don't say "Let's proceed" or ask for confirmation - just execute the tool right away!
    If they haven't connected a wallet, ask them to connect first.
+    
+    ## SIMPLIFIED TOKEN SWAP FLOW
+    When a user wants to swap tokens:
+    1. Ask for the bonding curve address (or token name/symbol to look it up), amount, and direction (Buy/Sell).
+    2. Call 'get_swap_quote' to get an estimated output.
+    3. Show the estimate to the user.
+    4. If they confirm, calculate 'minAmountOut' (e.g., 95% of estimated output for 5% slippage) and call the 'swap' tool.
+    5. Use the user's connected wallet address as the 'authority'.
 
-## Tool Execution
-- Call 'execute_mcp_tool' with tool_name and arguments as a JSON string
-- For create_genesis_account, the required fields are: baseMint, totalSupplyBaseToken, name, uri, symbol
-- You MUST also provide 'authority' OR 'payer' (use the user's wallet address for both)
-- IMPORTANT: For baseMint, ALWAYS use the literal string "generate" - this tells the server to generate a new keypair for the token mint
-- ALWAYS execute the tool when you have enough information - don't wait for user confirmation
-
-Example JSON for create_genesis_account:
+    ## Tool Execution
+    - Call 'execute_mcp_tool' with tool_name and arguments as a JSON string
+    - For create_genesis_account, the required fields are: baseMint, totalSupplyBaseToken, name, uri, symbol
+    - You MUST also provide 'authority' OR 'payer' (use the user's wallet address for both)
+    - IMPORTANT: For baseMint, ALWAYS use the literal string "generate" - this tells the server to generate a new keypair for the token mint
+    - ALWAYS execute the tool when you have enough information - don't wait for user confirmation
+    
+    Example JSON for create_genesis_account:
 {
   "baseMint": "generate",
   "totalSupplyBaseToken": "1000000000",
@@ -103,6 +111,7 @@ If user asks for "help", list available actions in simple terms:
 - Create a new token
 - Look up existing Genesis accounts
 - Check bonding curve prices
+- Swap tokens (Buy/Sell)
 - Get swap quotes
 ${walletContext}
 `,
@@ -282,10 +291,15 @@ ${walletContext}
       }
     }
 
+    let inferredToolName = "create_genesis_account";
+    if (transactionData && !transactionData.baseMint) {
+      inferredToolName = "swap";
+    }
+
     return NextResponse.json({
       type: transactionData ? "tool_result" : "text",
       content: content,
-      tool: transactionData ? "create_genesis_account" : undefined,
+      tool: transactionData ? inferredToolName : undefined,
       result: transactionData
         ? { content: [{ type: "text", text: JSON.stringify(transactionData) }] }
         : undefined,

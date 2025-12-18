@@ -41,8 +41,8 @@ Open [http://localhost:3000](http://localhost:3000) and connect your wallet.
 
 ## Configuration
 
-| Variable         | Required | Description              |
-| ---------------- | -------- | ------------------------ |
+| Variable         | Required | Description               |
+| ---------------- | -------- | ------------------------- |
 | `OPENAI_API_KEY` | Yes      | OpenAI API key for GPT-4o |
 
 ## How It Works

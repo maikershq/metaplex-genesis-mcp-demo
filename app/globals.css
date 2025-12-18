@@ -14,7 +14,8 @@
 }
 
 /* Dark theme override */
-.dark-theme, .dark {
+.dark-theme,
+.dark {
   --background: #111111;
   --foreground: #ffffff;
   --card-background: #181818;
@@ -35,10 +36,12 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  
+
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 body {
@@ -53,22 +56,14 @@ body {
 
 /* Consistent CTA button styling - from maikers-collectibles */
 .btn-cta {
-  background: linear-gradient(
-    to right,
-    rgb(6 182 212),
-    rgb(20 184 166)
-  );
+  background: linear-gradient(to right, rgb(6 182 212), rgb(20 184 166));
   color: white;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .btn-cta:hover:not(:disabled) {
-  background: linear-gradient(
-    to right,
-    rgb(8 145 178),
-    rgb(15 118 110)
-  );
+  background: linear-gradient(to right, rgb(8 145 178), rgb(15 118 110));
   box-shadow:
     0 10px 15px -3px rgb(6 182 212 / 0.25),
     0 4px 6px -2px rgb(6 182 212 / 0.1);
@@ -180,7 +175,8 @@ body {
   color: inherit;
 }
 
-.prose ul, .prose ol {
+.prose ul,
+.prose ol {
   padding-left: 1.25em;
 }
 

@@ -281,7 +281,8 @@ export function ChatInterface() {
                             {JSON.stringify(m.result, null, 2)}
                           </pre>
 
-                          {m.tool === "create_genesis_account" &&
+                          {(m.tool === "create_genesis_account" ||
+                            m.tool === "swap") &&
                             m.result.content &&
                             (() => {
                               const txData = getTransactionData(
