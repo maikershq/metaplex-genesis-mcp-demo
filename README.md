@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Metaplex Genesis MCP Demo
 
-## Getting Started
+**AI chat demo for Metaplex Genesis MCP.**
 
-First, run the development server:
+> Create Solana tokens through natural conversation with wallet signing.
+
+Demo web app showcasing the [metaplex-genesis-mcp](https://github.com/maikershq/metaplex-genesis-mcp) server.
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6)](https://typescriptlang.org/)
+[![Solana](https://img.shields.io/badge/Solana-Devnet-9945FF)](https://solana.com/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue)](LICENSE)
+
+## Overview
+
+A Next.js chat interface that connects to the Metaplex Genesis MCP server, enabling natural language token creation on Solana. Users can create tokens by simply describing what they want.
+
+**Features:**
+
+- 💬 **Chat Interface** - Natural language interaction with GPT-4o
+- 👛 **Wallet Integration** - Solana wallet adapter for transaction signing
+- 🪙 **Token Creation** - Create Genesis tokens with minimal input
+- 🔗 **MCP Integration** - Direct connection to metaplex-genesis-mcp server
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp env.example .env
+# Add your OPENAI_API_KEY to .env
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) and connect your wallet.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable         | Required | Description              |
+| ---------------- | -------- | ------------------------ |
+| `OPENAI_API_KEY` | Yes      | OpenAI API key for GPT-4o |
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+1. **User connects wallet** - Phantom, Solflare, or any Solana wallet
+2. **User describes token** - "Create a token called MyCoin with symbol MC"
+3. **LLM calls MCP tool** - `create_genesis_account` with smart defaults
+4. **Server generates transaction** - Including new mint keypair
+5. **User signs and submits** - Transaction sent to Solana devnet
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── app/
+│   ├── api/chat/     # LLM + MCP integration endpoint
+│   └── page.tsx      # Main page
+├── components/
+│   ├── ChatInterface.tsx      # Chat UI with message handling
+│   ├── WalletButton.tsx       # Wallet connect button
+│   └── WalletContextProvider.tsx  # Solana wallet adapter setup
+└── lib/
+    └── mcp.ts        # MCP client for metaplex-genesis-mcp
+```
 
-## Deploy on Vercel
+## Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm install       # Install dependencies
+pnpm dev           # Start development server
+pnpm build         # Build for production
+pnpm lint          # Run linter
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Requirements
+
+- Node.js 20+
+- [metaplex-genesis-mcp](https://github.com/maikershq/metaplex-genesis-mcp) server (sibling directory)
+- OpenAI API key
+
+## Related Repositories
+
+- **[metaplex-genesis-mcp](https://github.com/maikershq/metaplex-genesis-mcp)** - MCP server for Metaplex Genesis
+- **[metaplex-genesis](https://github.com/metaplex-foundation/genesis)** - Metaplex Genesis program
+- **[wallet-adapter](https://github.com/anza-xyz/wallet-adapter)** - Solana wallet adapter
+
+## License
+
+Apache License 2.0 - see [LICENSE](LICENSE) for details.
+
+---
+
+**Built by [maikers - creators of realities](https://maikers.com)**
