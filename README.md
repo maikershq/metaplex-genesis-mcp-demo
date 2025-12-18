@@ -73,7 +73,6 @@ pnpm lint          # Run linter
 ## Requirements
 
 - Node.js 20+
-- [metaplex-genesis-mcp](https://github.com/maikershq/metaplex-genesis-mcp) server (sibling directory)
 - OpenAI API key
 
 ## Related Repositories

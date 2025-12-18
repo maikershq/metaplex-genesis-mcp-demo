@@ -1,6 +1,8 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import path from "path";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
 
 let mcpClient: Client | null = null;
 
@@ -9,13 +11,8 @@ export async function getMcpClient() {
     return mcpClient;
   }
 
-  // Path to the MCP server executable
-  // Assuming the app is running in the root of the demo folder
-  // and the server is in ../metaplex-genesis-mcp/dist/index.js
-  const serverPath = path.resolve(
-    process.cwd(),
-    "../metaplex-genesis-mcp/dist/index.js",
-  );
+  // Resolve the path to the installed npm package
+  const serverPath = require.resolve("metaplex-genesis-mcp");
 
   const transport = new StdioClientTransport({
     command: "node",
