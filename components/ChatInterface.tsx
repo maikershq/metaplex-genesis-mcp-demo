@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { VersionedTransaction } from "@solana/web3.js";
+import { VersionedTransaction, Keypair } from "@solana/web3.js";
 import { Buffer } from "buffer";
 import { Send, Bot, User, Sparkles, Trash2 } from "lucide-react";
 import Markdown from "react-markdown";
@@ -110,7 +110,10 @@ export function ChatInterface() {
     }
   };
 
-  const handleSignAndSend = async (base64Tx: string) => {
+  const handleSignAndSend = async (
+    base64Tx: string,
+    mintSecretKey?: string,
+  ) => {
     if (!publicKey) {
       alert("Please connect your wallet first!");
       return;
@@ -118,6 +121,14 @@ export function ChatInterface() {
     try {
       const txBuffer = Buffer.from(base64Tx, "base64");
       const transaction = VersionedTransaction.deserialize(txBuffer);
+
+      // If we have a mint secret key, sign with it first
+      if (mintSecretKey) {
+        const mintKeypair = Keypair.fromSecretKey(
+          Buffer.from(mintSecretKey, "base64"),
+        );
+        transaction.sign([mintKeypair]);
+      }
 
       const signature = await sendTransaction(transaction, connection);
 
@@ -127,24 +138,34 @@ export function ChatInterface() {
         ...prev,
         {
           role: "assistant",
-          content: `Transaction confirmed! Signature: ${signature}`,
+          content: `✅ Transaction confirmed!\n\n**Signature:** \`${signature}\`\n\n[View on Solana Explorer](https://explorer.solana.com/tx/${signature}?cluster=devnet)`,
           type: "text",
         },
       ]);
     } catch (error: any) {
       console.error(error);
-      alert(`Transaction failed: ${error.message}`);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `❌ Transaction failed: ${error.message}`,
+          type: "error",
+        },
+      ]);
     }
   };
 
-  const getTransactionFromContent = (content: any[]) => {
+  const getTransactionData = (content: any[]) => {
     if (Array.isArray(content)) {
       for (const item of content) {
         if (item.type === "text") {
           try {
             const parsed = JSON.parse(item.text);
             if (parsed && parsed.transaction) {
-              return parsed.transaction;
+              return {
+                transaction: parsed.transaction,
+                mintSecretKey: parsed.mintSecretKey,
+              };
             }
           } catch {}
         }
@@ -248,15 +269,20 @@ export function ChatInterface() {
                           {m.tool === "create_genesis_account" &&
                             m.result.content &&
                             (() => {
-                              const tx = getTransactionFromContent(
+                              const txData = getTransactionData(
                                 m.result.content,
                               );
-                              if (tx) {
+                              if (txData) {
                                 return (
                                   <div className="mt-4 pt-4 border-t border-white/10">
                                     <Button
                                       size="sm"
-                                      onClick={() => handleSignAndSend(tx)}
+                                      onClick={() =>
+                                        handleSignAndSend(
+                                          txData.transaction,
+                                          txData.mintSecretKey,
+                                        )
+                                      }
                                       className="btn-cta w-full sm:w-auto"
                                     >
                                       Sign & Send Transaction

@@ -75,11 +75,12 @@ Instead, follow this simplified flow:
 - Call 'execute_mcp_tool' with tool_name and arguments as a JSON string
 - For create_genesis_account, the required fields are: baseMint, totalSupplyBaseToken, name, uri, symbol
 - You MUST also provide 'authority' OR 'payer' (use the user's wallet address for both)
+- IMPORTANT: For baseMint, ALWAYS use the literal string "generate" - this tells the server to generate a new keypair for the token mint
 - ALWAYS execute the tool when you have enough information - don't wait for user confirmation
 
 Example JSON for create_genesis_account:
 {
-  "baseMint": "<user_wallet_address>",
+  "baseMint": "generate",
   "totalSupplyBaseToken": "1000000000",
   "name": "TokenName",
   "uri": "https://arweave.net/placeholder",
