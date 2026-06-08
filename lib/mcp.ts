@@ -12,7 +12,7 @@ export async function getMcpClient() {
   }
 
   // Resolve the path to the installed npm package
-  const serverPath = require.resolve("metaplex-genesis-mcp");
+  const serverPath = require.resolve("metaplex-genesis-mcp/dist/index.js");
 
   const transport = new StdioClientTransport({
     command: "node",

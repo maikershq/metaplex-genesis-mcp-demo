@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { callMcpTool, getToolsDescription } from "@/lib/mcp";
 import { z } from "zod";
-import { generateText, tool } from "ai";
+import { generateText, stepCountIs, tool } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 const MessageSchema = z.object({
@@ -116,7 +116,7 @@ If user asks for "help", list available actions in simple terms:
 ${walletContext}
 `,
       messages,
-      maxSteps: 5, // Allow multi-step reasoning (e.g. fetch then analyze)
+      stopWhen: stepCountIs(5),
       tools: {
         execute_mcp_tool: tool({
           description: "Execute a Metaplex Genesis MCP tool",
@@ -251,11 +251,11 @@ ${walletContext}
         for (const step of result.steps || []) {
           if (step.toolResults) {
             for (const tr of step.toolResults) {
-              if (tr.result) {
+              if (tr.output) {
                 const rStr =
-                  typeof tr.result === "string"
-                    ? tr.result
-                    : JSON.stringify(tr.result);
+                  typeof tr.output === "string"
+                    ? tr.output
+                    : JSON.stringify(tr.output);
                 if (rStr && rStr.length > 0) {
                   toolResultText = rStr;
                 }
